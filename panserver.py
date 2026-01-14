@@ -109,7 +109,7 @@ class DocumentCompiler:
             }
             var xhr = new XMLHttpRequest();
             var href = window.location.pathname;
-            var re = /view\/(.+?)$/;
+            var re = /view\\/(.+?)$/;
             var name = re.exec(href)[1];
             xhr.open('GET', '/refresh/' + name + "?time=" + Math.ceil(window.performance.timing.connectStart / 1000));
             xhr.onload = function() {
@@ -134,13 +134,9 @@ class DocumentCompiler:
         text = ""
         if not self.export:
             text += """
-            <span class="topmenu">Panserver: <a href="/">Index</a>
-            <span style="text-decoration: underline; cursor: pointer" onclick="(tocElement = document.getElementById('TOC')).style.display = (tocElement.style.display != 'block') ? 'block' : 'none';">TOC</span>
-            Format:
-            <a href="?fmt=export">Export</a>
-            <a href="?fmt=simple">Simple</a>
-            <a href="?fmt=inline">Inline</a>
-            </span>
+            <div class="topmenu">
+            <a href="/">mdv</a> | <span style="cursor:pointer" onclick="(tocElement = document.getElementById('TOC')).style.display = (tocElement.style.display != 'block') ? 'block' : 'none';">TOC</span> | <a href="?fmt=export">Export</a> <a href="?fmt=simple">Simple</a> <a href="?fmt=inline">Inline</a>
+            </div>
             """
 
         if not self.basic_style:
@@ -329,17 +325,16 @@ def route_generated(name):
 def route_index():
     text = ""
 
-    text += "<html><head><title>Panserver Index</title>"
+    text += "<html><head><title>Markdown Live Server</title>"
     text += '<style type="text/css">{}</style>'.format(style_basic + style_index)
     text += markdown_css_link
     text += "</head><body class='markdown-body' style='max-width: 600px; margin: auto; margin-top: 80px'>"
-    text += '<h1>Panserver</h1>'
-    text += 'Serving Markdown documents rendered using <a href="http://pandoc.org/">pandoc</a>. By <a href="http://marcelfischer.eu/">Marcel Fischer</a>'
+    text += '<h1>Markdown Live Server</h1>'
 
     def dir_entry(dirname, toplevel = False):
         #collect markdown files recursively into a list
         #return '' if no markdown file is in the directory
-        if dirname == '.git':
+        if os.path.basename(dirname) in ['.git', 'node_modules']:
             return ''
         dirtext = ''
         for name in sorted(os.listdir(os.path.join('.', dirname))):
@@ -416,8 +411,9 @@ style_document_add = """
         @media (max-width: 101em) {
             #TOC { display: none; }
         }
-        .topmenu { font-size: 1em; color: lightgrey; }
-        .topmenu a { color: lightgrey; }
+        .topmenu { font-size: 0.8em; background: #1a1a1a; color: #ccc; padding: 6px 12px; margin: -8px -8px 16px -8px; }
+        .topmenu a { color: #fff; text-decoration: none; }
+        .topmenu a:hover { text-decoration: underline; }
 """
 style_index = """
         ul.file-listing a { text-decoration: none; }
@@ -478,7 +474,7 @@ def main():
     if config.r:
         host = ''
 
-    bottle.run(host=host, port=config.port)
+    bottle.run(host=host, port=config.port, reloader=True)
 
     shutil.rmtree(embedding_processor.tempdir)
     for compiler in doument_compilers.values():

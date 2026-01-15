@@ -30,6 +30,14 @@ pip install bottle
 
 ## Usage
 
+### CLI Mode (terminal output)
+
+```bash
+./mdv.sh file.md
+```
+
+### Server Mode (web browser)
+
 ```bash
 ./mdv.sh
 ```

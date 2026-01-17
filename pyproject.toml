@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mdv-live"
-version = "0.1.0"
+name = "markdown-live-server"
+version = "0.1.1"
 description = "Markdown live server with live reload using Pandoc"
 readme = "README.md"
 license = {text = "MIT"}

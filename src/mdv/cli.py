@@ -6,6 +6,11 @@ import subprocess
 import os
 
 
+def get_writer_path():
+    """Get the path to the custom ANSI Lua writer."""
+    return os.path.join(os.path.dirname(__file__), "ansi-writer.lua")
+
+
 def main():
     """Main entry point for the mdv command."""
     # CLI mode: if a file is passed, render to terminal with ANSI formatting
@@ -13,8 +18,9 @@ def main():
         filepath = sys.argv[1]
         # Check if first arg is a file (not a flag like -p or -a)
         if not filepath.startswith('-') and os.path.isfile(filepath):
+            writer_path = get_writer_path()
             result = subprocess.run(
-                ["pandoc", "-t", "ansi", "--wrap=auto", filepath]
+                ["pandoc", "-t", writer_path, "--wrap=auto", filepath]
             )
             sys.exit(result.returncode)
 

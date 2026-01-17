@@ -13,13 +13,13 @@ Changes to the code are immediately available - no reinstall needed.
 ### Uninstall
 
 ```bash
-pipx uninstall mdv-live
+pipx uninstall markdown-live-server
 ```
 
 ### Reinstall (if you change pyproject.toml or package structure)
 
 ```bash
-pipx uninstall mdv-live && pipx install -e .
+pipx uninstall markdown-live-server && pipx install -e .
 ```
 
 ## Publish to PyPI
@@ -38,7 +38,7 @@ pipx uninstall mdv-live && pipx install -e .
 
 ```bash
 # Build
-python3 -m build
+pyproject-build
 
 # Upload (username: __token__, password: your pypi-xxx token)
 twine upload dist/*
@@ -50,12 +50,12 @@ twine upload dist/*
 2. Rebuild and upload:
    ```bash
    rm -rf dist/
-   python3 -m build
+   pyproject-build
    twine upload dist/*
    ```
 
 ## Install from PyPI
 
 ```bash
-pipx install mdv-live
+pipx install markdown-live-server
 ```

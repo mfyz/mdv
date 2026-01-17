@@ -405,6 +405,13 @@ style_basic = """
             body { position: relative; }
             #TOC { display: block; position: absolute; left: -50%; top: 5em; max-width: 46%; width: 45%; }
         }
+        /* Blue heading styles */
+        h1, h2, h3, h4 { color: #fff; padding: 4px 10px; margin-top: 1.5em; width: fit-content; border-bottom: none; }
+        h1 { background-color: #000087; }
+        h2 { background-color: #0000ff; }
+        h3 { background-color: #005fd7; }
+        h4 { background-color: #0087ff; }
+        h5, h6 { color: #00afff; }
 """
 
 style_document_add = """
